@@ -67,6 +67,19 @@ class Modele
         }
     }
 
+    public function loginId(int $id)
+    {
+        if ($this -> PDO != null ){
+            $requete = "select * from users where id_u=".$id.";";
+            $select = $this-> PDO-> prepare($requete);
+            $select-> execute();
+            $salarie = $select -> fetch();
+            return $salarie;
+        }else{
+            return null;
+        }
+    }
+
     public function countSalarie()
     {
     if ($this -> PDO != null ){
@@ -166,6 +179,9 @@ class Modele
             return null;
         }
     }
+
+  
+
 
 
 }

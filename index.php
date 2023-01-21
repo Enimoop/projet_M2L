@@ -24,7 +24,7 @@
             $page = "404.php";
     }else{
         
-        if(isset($_SESSION['connecte']) && $_SESSION['connecte'] == true)
+        if(isset($_SESSION['id']) && $_SESSION['id'] == true)
             $page = "home.php";
         else
             $page = "login.php";

@@ -77,6 +77,8 @@ class Controleur
         {
             $salarie = $this->modele->findSalarie($email, $mdp);
 
+
+
             if($salarie == false)
             {
                 echo "<div class='alert alert-danger' role='alert'>
@@ -85,17 +87,26 @@ class Controleur
             }
             else
             {
+                
                 $_SESSION['connecte']=true;
                 $_SESSION['id']=$salarie['id_u'];
                 $_SESSION['lvl']=$salarie['lvl'];
-                header('Location:index.php');
+               return $salarie;
             }
+        }
+        public function loginid(int $id){
+            $salarie = $this->modele->loginId($id);
+            
+            $_SESSION['connecte']=true;
+            $_SESSION['id']=$salarie['id_u'];
+            $_SESSION['lvl']=$salarie['lvl'];
         }
 
         public function logout()
         {
             $_SESSION = array();
             session_destroy();
+            setcookie('Auth','',time()-3600,'/','localhost',false,true);
             header('Location: index.php');
         }
 

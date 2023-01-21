@@ -651,7 +651,8 @@ if (isset($_POST['submit_research']))
                                         <th>Nom</th>
                                         <th>Prenom</th>
                                         <th>Email</th>
-                                        <th >Level</th>
+                                        <th>Level</th>
+                                        <th>Formations</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -680,6 +681,9 @@ if (isset($_POST['submit_research']))
                                         </td>
                                         <td><?= $subordonne['email']?></td>
                                         <td><?= $subordonne['lvl']?></td>
+                                     
+                        
+                            
                                     </tr>
                                     <?php }?>
                                     
