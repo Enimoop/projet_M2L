@@ -19,7 +19,8 @@ class Modele
     /************** Les Formations **************/
     public function allFormations(int $id_u) {
         if ($this -> PDO != null ){
-            $requete = "select * from formation left join suivre on formation.id_f=suivre.id_f and suivre.id_u=".$id_u.";";
+            $requete = "select * from formation left join suivre on formation.id_f=suivre.id_f 
+            and suivre.id_u=".$id_u.";";
             $select = $this-> PDO-> prepare($requete);
             $select-> execute();
             $lesFormations = $select -> fetchAll();
@@ -28,6 +29,43 @@ class Modele
             return null;
         }
 
+    }
+
+    public function allFormationsWaiting(int $id_u)
+    {
+        if ($this -> PDO != null ){
+            $requete = "select * from formation inner join suivre on formation.id_f=suivre.id_f 
+            inner join users on suivre.id_u=users.id_u 
+            and users.id_chef=".$id_u." and etat = 2;";
+            $select = $this-> PDO-> prepare($requete);
+            $select-> execute();
+            $lesFormations = $select -> fetchAll();
+            return $lesFormations;
+        }else{
+            return null;
+        }
+    }
+
+    public function accepter(int $id_u, int $id_f)
+    {
+        if ($this -> PDO != null ){
+            $requete = "update suivre set etat = 1  
+            where id_u=".$id_u." and id_f=".$id_f.";";
+            $select = $this-> PDO-> prepare($requete);
+            $select-> execute();  
+            
+        }
+    }
+
+    public function refuser(int $id_u, int $id_f)
+    {
+        if ($this -> PDO != null ){
+            $requete = "update suivre set etat = 3  
+            where id_u=".$id_u." and id_f=".$id_f.";";
+            $select = $this-> PDO-> prepare($requete);
+            $select-> execute();  
+            
+        } 
     }
 
      /************** Les Salaries **************/

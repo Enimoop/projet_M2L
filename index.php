@@ -1,6 +1,7 @@
 <?php require_once 'includes/header.php'; 
     
     require "controleur/controleur.class.php";
+    require "core/auth.class.php";
     $controleur=new Controleur();
    
     /*

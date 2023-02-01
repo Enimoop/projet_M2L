@@ -1,5 +1,20 @@
 <?php 
+if(isset ($_GET['method'])&& $_GET['method']=='accepter')
+{
+    $accepter = $controleur->accepter($_GET['id_u'],$_GET['id_f']);
+}
+
+if(isset ($_GET['method'])&& $_GET['method']=='refuser')
+{
+    $refuser = $controleur->refuser($_GET['id_u'],$_GET['id_f']);
+}
+
 $lesFormations=$controleur->allFormations($_SESSION['id']);
+
+if($_SESSION['lvl']==2)
+{
+    $lesFormationsWaiting=$controleur->allFormationsWaiting($_SESSION['id']);
+}
 $lesSalaries=$controleur->allSalaries();
 $count=$controleur->countSalarie();
 $countSub=$controleur->countSubordonne();
@@ -38,6 +53,8 @@ if (isset($_POST['submit_research']))
 {
     $research = $controleur->rechercher($_POST['search']);
 }
+
+
 
 
 
@@ -652,7 +669,7 @@ if (isset($_POST['submit_research']))
                                         <th>Prenom</th>
                                         <th>Email</th>
                                         <th>Level</th>
-                                        <th>Formations</th>
+                                       
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -681,9 +698,96 @@ if (isset($_POST['submit_research']))
                                         </td>
                                         <td><?= $subordonne['email']?></td>
                                         <td><?= $subordonne['lvl']?></td>
-                                     
+                                        
                         
                             
+                                    </tr>
+                                    <?php }?>
+                                    
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 col-md-12">
+                <div class="card table-card">
+                    <div class="card-header">
+                        <h5>Demandes en attente</h5>
+                        <div class="card-header-right">
+                            <div class="btn-group card-option">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="feather icon-more-horizontal"></i>
+                                </button>
+                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
+                                    <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
+                                    <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+                                    <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="chk-option">
+                                                <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
+                                                    
+                                                    <span class="custom-control-label"></span>
+                                                </label>
+                                            </div>
+                                            Accepter
+                                        </th>
+                                        <th> Refuser </th>
+                                        <th>Formation</th>
+                                        <th>Nom</th>
+                                        <th>prenom</th>
+                                        <th >mail</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                foreach($lesFormationsWaiting as $formationWaiting)
+                                {
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <a href="index.php?method=accepter&id_u=<?=$formationWaiting['id_u']; ?>
+                                                &id_f=<?=$formationWaiting['id_f'] ;?>">
+                                                    <button type="button" class="btn btn-success">Accepter </button>
+                                                </a>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <a href="index.php?method=refuser&id_u=<?= $formationWaiting['id_u']; ?>
+                                                &id_f=<?=$formationWaiting['id_f'] ;?>">
+                                                    <button type="button" class="btn btn-danger">Refuser </button>
+                                                </a>
+                                                </label>
+                                            </div>
+                                        </td>
+
+                                            <td>
+
+                                                <div>
+                                                    <p><?= $formationWaiting['libelle_f']?></p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <p><?= $formationWaiting['nom_u']?></p>
+                                                </div>      
+                                        </td>
+                                        <td><?= $formationWaiting['prenom_u']?></td>
+                                        <td><?= $formationWaiting['email']?></td>
                                     </tr>
                                     <?php }?>
                                     
