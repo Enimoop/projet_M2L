@@ -824,6 +824,7 @@ if (isset($_POST['submit_research']))
                             </div>
                         </div>
                     </div>
+<?= Flash::getFlash(); ?>
 <form method="post">                  
 <div class="mb-3">
   <label for="exampleFormControlInput1" class="form-label">Email address</label>

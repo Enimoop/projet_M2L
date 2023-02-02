@@ -77,6 +77,7 @@ class Controleur
       echo "<div class='alert alert-success' role='alert'>".$mdp."
     </div>";
             $insertSalarie=$this->modele->insertSalarie($email,sha1($mdp), $nom_u, $prenom_u, $lvl);
+            flash::setFlash("success", "Le salarié a bien été ajouté");
         }
 
         public function editSalarie(string $email, string $mdpconfirm, string $nom, string $prenom, int $id_u )

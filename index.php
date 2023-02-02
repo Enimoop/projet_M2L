@@ -2,6 +2,7 @@
     
     require "controleur/controleur.class.php";
     require "core/auth.class.php";
+    require "core/flash.class.php";
     $controleur=new Controleur();
    
     /*
