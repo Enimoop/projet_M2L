@@ -23,6 +23,12 @@ class Controleur
             return $allFormationsWaiting;
         }
 
+        public function allFormationsEnd(int $id_u)
+        {
+            $allFormationsEnd=$this->modele->allFormationsEnd($id_u);
+            return $allFormationsEnd;
+        }
+
         public function accepter(int $id_u, int $id_f)
         {
             $accepter=$this->modele->accepter($id_u, $id_f);  

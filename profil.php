@@ -557,7 +557,7 @@ $infoSalarie=$controleur->infoSalarie($_SESSION['id']);
   <label for="exampleFormControlInput1" class="form-label">Confirmer mot de passe</label>
   <input type="password" name="mdpconfirm" class="form-control" id="exampleFormControlInput1">
 </div>
-<button type="submit" name="sub"> Ajouter </button>
+<button type="submit" name="sub"> Modifier </button>
 </form>
                 </div>
             </div>

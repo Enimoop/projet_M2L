@@ -218,7 +218,27 @@ class Modele
         }
     }
 
-  
+    public function allFormationsEnd(int $id_u) {
+        if ($this -> PDO != null ){
+            $requete = "select * from formation inner join suivre on formation.id_f=suivre.id_f 
+            and suivre.id_u=".$id_u." and ADDDATE(date_f,INTERVAL nb_jours DAY)<curdate() and etat=1;";
+            $select = $this-> PDO-> prepare($requete);
+            $select-> execute();
+            $lesFormationsEnd = $select -> fetchAll();
+            return $lesFormationsEnd;
+        }else{
+            return null;
+        }
+
+    }
+
+   
+
+    
+    
+
+    
+
 
 
 

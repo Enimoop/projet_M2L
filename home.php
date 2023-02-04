@@ -1,4 +1,15 @@
 <?php 
+$infoSalarie=$controleur->infoSalarie($_SESSION['id']);
+
+if(isset($infoSalarie['nb_jours_u'])&& $infoSalarie['nb_jours_u']==0)
+{
+    ?>
+        <script>
+            alert("Vous n'avez pas le nombre de jour nécessaire");
+        </script>
+    <?php
+}
+
 if(isset ($_GET['method'])&& $_GET['method']=='accepter')
 {
     $accepter = $controleur->accepter($_GET['id_u'],$_GET['id_f']);
@@ -10,11 +21,15 @@ if(isset ($_GET['method'])&& $_GET['method']=='refuser')
 }
 
 $lesFormations=$controleur->allFormations($_SESSION['id']);
+$lesFormationsEnd=$controleur->allFormationsEnd($_SESSION['id']);
+
 
 if($_SESSION['lvl']==2)
 {
     $lesFormationsWaiting=$controleur->allFormationsWaiting($_SESSION['id']);
 }
+
+
 $lesSalaries=$controleur->allSalaries();
 $count=$controleur->countSalarie();
 $countSub=$controleur->countSubordonne();
@@ -560,6 +575,81 @@ if (isset($_POST['submit_research']))
                     </div>
                 </div>
             </div>
+
+            <div class="col-xl-6 col-md-12">
+                <div class="card table-card">
+                    <div class="card-header">
+                        <h5>Formations finies</h5>
+                        <div class="card-header-right">
+                            <div class="btn-group card-option">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="feather icon-more-horizontal"></i>
+                                </button>
+                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
+                                    <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
+                                    <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+                                    <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="chk-option">
+                                                <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
+                                                    <input type="checkbox" class="custom-control-input">
+                                                    <span class="custom-control-label"></span>
+                                                </label>
+                                            </div>
+                                            Assigned
+                                        </th>
+                                        <th>libelle</th>
+                                        <th>contenu</th>
+                                        <th>jours</th>
+                                        <th >date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php 
+                                foreach($lesFormationsEnd as $formationEnd)
+                                {
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            <div class="chk-option">
+                                                <label class="check-task custom-control custom-checkbox d-flex justify-content-center done-task">
+                                                    <input type="checkbox" class="custom-control-input">
+                                                    <span class="custom-control-label"></span>
+                                                </label>
+                                            </div>
+                                            <td>
+                                                <div>
+                                                    <p><?= $formationEnd['libelle_f']?></p>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div>
+                                                    <p><?= $formationEnd['contenu']?></p>
+                                                </div>      
+                                        </td>
+                                        <td><?= $formationEnd['nb_jours']?></td>
+                                        <td><?= $formationEnd['date_f']?></td>
+                                    </tr>
+                                    <?php }?>
+                                    
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-xl-6 col-md-12">
                 <div class="card table-card">
                     <div class="card-header">
