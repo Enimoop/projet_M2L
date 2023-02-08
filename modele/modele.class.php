@@ -218,6 +218,18 @@ class Modele
         }
     }
 
+    public function insertFormations(string $libelle_f, string $contenu,int $duree, string $date_f, int $nb_jours, int $id_lieu, int $id_presta)
+    {
+        if ($this-> PDO != null){
+            $requete = "insert into formation (libelle_f, contenu, duree, date_f, nb_jours, id_lieu, id_presta) values
+            ('".$libelle_f."','".$contenu."',".$duree.",'".$date_f."', ".$nb_jours.",".$id_lieu.",".$id_presta.");";
+        $select = $this-> PDO-> prepare($requete);
+        $select-> execute();
+     }else{
+        return null;
+     }
+    }
+
     public function allFormationsEnd(int $id_u) {
         if ($this -> PDO != null ){
             $requete = "select * from formation inner join suivre on formation.id_f=suivre.id_f 
@@ -232,7 +244,32 @@ class Modele
 
     }
 
-   
+    public function selectPrestataire()
+    {
+        if ($this -> PDO != null ){
+            $requete = "select * from prestataire;";
+            $select = $this-> PDO-> prepare($requete);
+            $select-> execute();
+            $lesPrestataires = $select -> fetchAll();
+            return $lesPrestataires;
+        }else{
+            return null;
+        }
+    }
+
+    public function selectLieu()
+    {
+        if ($this -> PDO != null ){
+            $requete = "select * from lieu;";
+            $select = $this-> PDO-> prepare($requete);
+            $select-> execute();
+            $lesLieux = $select -> fetchAll();
+            return $lesLieux;
+        }else{
+            return null;
+        }
+    }
+
 
     
     

@@ -167,7 +167,23 @@ class Controleur
             $rechercher=$this->modele->rechercher($libelle_f);
             return $rechercher;
         }
+        
+        public function insertFormations(string $libelle_f, string $contenu,int $duree, string $date_f, int $nb_jours, int $id_lieu, int $id_presta)
+        {
+            $insertFormations=$this->modele->insertFormations($libelle_f, $contenu, $duree, $date_f, $nb_jours, $id_lieu, $id_presta);
+        }
 
+        public function selectPrestataire()
+        {
+            $allPrestataire=$this->modele->selectPrestataire();
+            return $allPrestataire;
+        }
+
+        public function selectLieu()
+        {
+            $allLieux=$this->modele->selectLieu();
+            return $allLieux;
+        }
         
 
 

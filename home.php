@@ -1,6 +1,8 @@
 <?php 
+$lesPrestataires=$controleur->selectPrestataire();
+$lesLieux=$controleur->selectLieu();
 $infoSalarie=$controleur->infoSalarie($_SESSION['id']);
-
+if($_SESSION['lvl']<3){
 if(isset($infoSalarie['nb_jours_u'])&& $infoSalarie['nb_jours_u']==0)
 {
     ?>
@@ -8,6 +10,7 @@ if(isset($infoSalarie['nb_jours_u'])&& $infoSalarie['nb_jours_u']==0)
             alert("Vous n'avez pas le nombre de jour nécessaire");
         </script>
     <?php
+}
 }
 
 if(isset ($_GET['method'])&& $_GET['method']=='accepter')
@@ -19,6 +22,21 @@ if(isset ($_GET['method'])&& $_GET['method']=='refuser')
 {
     $refuser = $controleur->refuser($_GET['id_u'],$_GET['id_f']);
 }
+
+if (isset($_POST['add']))
+{
+    $libelle_f=$_POST['libelle'];
+    $contenu=$_POST['contenu'];
+    $duree=$_POST['duree'];
+    $date_f=$_POST['date_f'];
+    $nb_jours=$_POST['nb_jours'];
+    $id_presta=$_POST['prestataire'];
+    $id_lieu=$_POST['lieu'];
+
+    $controleur-> insertFormations($libelle_f, $contenu, $duree, $date_f, $nb_jours, $id_lieu, $id_presta);
+
+}
+
 
 $lesFormations=$controleur->allFormations($_SESSION['id']);
 $lesFormationsEnd=$controleur->allFormationsEnd($_SESSION['id']);
@@ -72,15 +90,10 @@ if (isset($_POST['submit_research']))
 
 
 
-
 ?>
 
 <!-- [ Pre-loader ] start -->
-<div class="loader-bg">
-		<div class="loader-track">
-			<div class="loader-fill"></div>
-		</div>
-	</div>
+
 	<!-- [ Pre-loader ] End -->
 	<!-- [ navigation menu ] start -->
 	<nav class="pcoded-navbar  ">
@@ -937,6 +950,73 @@ if (isset($_POST['submit_research']))
 <button type="submit" name="sub"> Ajouter </button>
 </form>
                 </div>
+
+                <div class="col-lg-8 col-md-12">
+                <div class="card table-card review-card">
+                    <div class="card-header borderless ">
+                        <h5>Customer Reviews</h5>
+                        <div class="card-header-right">
+                            <div class="btn-group card-option">
+                                <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="feather icon-more-horizontal"></i>
+                                </button>
+                                <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right">
+                                    <li class="dropdown-item full-card"><a href="#!"><span><i class="feather icon-maximize"></i> maximize</span><span style="display:none"><i class="feather icon-minimize"></i> Restore</span></a></li>
+                                    <li class="dropdown-item minimize-card"><a href="#!"><span><i class="feather icon-minus"></i> collapse</span><span style="display:none"><i class="feather icon-plus"></i> expand</span></a></li>
+                                    <li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>
+                                    <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <?php if(isset ($_SESSION['lvl']) && $_SESSION['lvl']==3) {?>
+                <form method="post">
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Libellé</label>
+                        <input type="form-control" name="libelle" class="form-control" id="exampleFormControlInput1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Contenu</label>
+                        <input type="form-control" name="contenu" class="form-control" id="exampleFormControlInput1" >
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Durée</label>
+                        <input type="form-control" name="duree" class="form-control" id="exampleFormControlInput1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Date</label>
+                        <input type="text" name="date_f" id="datepicker">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleFormControlInput1" class="form-label">Nombre de jours</label>
+                        <input type="form-control" name="nb_jours" class="form-control" id="exampleFormControlInput1">
+                    </div>
+                    <div>
+                    <select class="form-select" aria-label="Default select example" name="prestataire">
+                        <option selected>Ouvert le menu déroulant</option>
+                        <?php foreach($lesPrestataires as $prestataire)
+                        {
+                            
+                         ?>
+                        <option value="<?= $prestataire['id_presta']?>"> <?= $prestataire['raison_sociale']?></option>
+                        <?php } ?>
+                    </select>
+                    </div>
+                    <div>
+                    <select class="form-select" aria-label="Default select example" name="lieu">
+                        <option selected>Ouvert le menu déroulant</option>
+                        <?php foreach($lesLieux as $lieu)
+                        {
+                            
+                         ?>
+                        <option value="<?= $lieu['id_lieu']?>"><?= $lieu['ville']?></option>
+                        <?php } ?>
+                    </select>
+                    </div>
+                    <button type="submit" name="add"> Ajouter </button>
+                </form>
+                </div>
+                <?php } ?>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="card">
